@@ -1,0 +1,8 @@
+keypair_path = "~/.ssh/id_ed25519.pub"
+instance_name = "Vault-Server"
+blueprint_id = "ubuntu_22_04"
+bundle_id = "small_3_0"
+profile = "aws-98"
+region = "ap-southeast-1"
+availability_zone = "ap-southeast-1a"
+user_data_path = "./files/install-runner.sh"
