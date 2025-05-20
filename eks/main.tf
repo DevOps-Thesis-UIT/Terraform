@@ -29,5 +29,5 @@ module "EKS" {
   node_group_subnet_ids = module.vpc.private_subnets
   node_group_min_size = 2
   node_group_max_size = 4
-  node_group_desired_size = 3
+  node_group_desired_size = 2
 }

@@ -1,3 +1,24 @@
+data "aws_ami" "ubuntu_eks" {
+  most_recent = true
+  owners      = ["099720109477"] # Canonical
+
+  filter {
+    name   = "name"
+    values = ["ubuntu-eks/k8s_${var.k8s_version}/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+}
+
+resource "aws_launch_template" "ubuntu_lt" {
+  name_prefix   = "${var.name}-lt-"
+  image_id      = data.aws_ami.ubuntu_eks.id
+  instance_type = "t3.medium"
+}
+
 resource "aws_eks_cluster" "main" {
   name     = "${var.name}"
   role_arn = var.role_arn
@@ -38,6 +59,11 @@ resource "aws_eks_node_group" "main" {
     desired_size = var.node_group_desired_size
     max_size     = var.node_group_max_size
     min_size     = var.node_group_min_size
+  }
+
+  launch_template {
+    id      = aws_launch_template.ubuntu_lt.id
+    version = "$Latest"
   }
 
   update_config {
