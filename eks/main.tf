@@ -1,7 +1,7 @@
 module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
 
-  name = "gr18-vpc"
+  name = "tuonglinh-vpc"
   cidr = "10.0.0.0/16"
 
   azs             = ["us-east-1a", "us-east-1b", "us-east-1c"]
@@ -19,7 +19,7 @@ module "vpc" {
 
 module "EKS" {
   source = "../modules/eks"
-  name = "devops_project_cluster"
+  name = "tuonglinh_cluster"
   role_arn = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/LabRole"
   k8s_version = "1.29"
   cluster_vpc_cidr = module.vpc.vpc_cidr_block
